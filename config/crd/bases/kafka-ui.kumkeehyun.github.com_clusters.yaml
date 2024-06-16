@@ -1,0 +1,197 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.13.0
+  name: clusters.kafka-ui.kumkeehyun.github.com
+spec:
+  group: kafka-ui.kumkeehyun.github.com
+  names:
+    kind: Cluster
+    listKind: ClusterList
+    plural: clusters
+    singular: cluster
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: Cluster is the Schema for the clusters API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ClusterSpec defines the desired state of Cluster
+            properties:
+              audit:
+                properties:
+                  auditTopicPartitions:
+                    format: int32
+                    type: integer
+                  consoleAuditEnabled:
+                    type: boolean
+                  logLevel:
+                    description: AuditLogLevel is the type of audit log level
+                    type: string
+                  topic:
+                    type: string
+                  topicAuditEnabled:
+                    type: boolean
+                type: object
+              bootstrapServers:
+                type: string
+              defaultKeySerde:
+                type: string
+              defaultValueSerde:
+                type: string
+              kafkaConnect:
+                items:
+                  properties:
+                    address:
+                      type: string
+                    keystoreLocation:
+                      type: string
+                    keystorePassword:
+                      type: string
+                    name:
+                      type: string
+                    password:
+                      type: string
+                    username:
+                      type: string
+                  required:
+                  - address
+                  - name
+                  type: object
+                type: array
+              ksqldbServer:
+                type: string
+              ksqldbServerAuth:
+                properties:
+                  password:
+                    type: string
+                  username:
+                    type: string
+                required:
+                - password
+                - username
+                type: object
+              ksqldbServerSsl:
+                properties:
+                  keystoreLocation:
+                    type: string
+                  keystorePassword:
+                    type: string
+                required:
+                - keystoreLocation
+                - keystorePassword
+                type: object
+              masking:
+                items:
+                  properties:
+                    fields:
+                      items:
+                        type: string
+                      type: array
+                    fieldsNamePattern:
+                      type: string
+                    maskingCharsReplacement:
+                      items:
+                        type: string
+                      type: array
+                    replacement:
+                      type: string
+                    topicKeyPattern:
+                      type: string
+                    topicValuePattern:
+                      type: string
+                    type:
+                      description: MaskingType is the type of masking
+                      type: string
+                  required:
+                  - type
+                  type: object
+                type: array
+              metrics:
+                properties:
+                  keystoreLocation:
+                    type: string
+                  keystorePassword:
+                    type: string
+                  password:
+                    type: string
+                  port:
+                    format: int32
+                    type: integer
+                  ssl:
+                    type: boolean
+                  type:
+                    type: string
+                  username:
+                    type: string
+                required:
+                - port
+                - type
+                type: object
+              name:
+                type: string
+              pollingThrottleRate:
+                format: int64
+                type: integer
+              readOnly:
+                type: boolean
+              schemaRegistry:
+                type: string
+              schemaRegistryAuth:
+                properties:
+                  password:
+                    type: string
+                  username:
+                    type: string
+                required:
+                - password
+                - username
+                type: object
+              schemaRegistrySsl:
+                properties:
+                  keystoreLocation:
+                    type: string
+                  keystorePassword:
+                    type: string
+                required:
+                - keystoreLocation
+                - keystorePassword
+                type: object
+              ssl:
+                properties:
+                  truststoreLocation:
+                    type: string
+                  truststorePassword:
+                    type: string
+                required:
+                - truststoreLocation
+                - truststorePassword
+                type: object
+            required:
+            - bootstrapServers
+            - name
+            type: object
+          status:
+            description: ClusterStatus defines the observed state of Cluster
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
