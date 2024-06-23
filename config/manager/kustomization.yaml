@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: kbzjung359/kafka-ui-operator
-  newTag: 0.0.1
+  newTag: 0.0.2
